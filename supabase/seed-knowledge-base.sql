@@ -239,3 +239,78 @@ Il contratto 3+2 è particolarmente vantaggioso in comuni ad alta tensione abita
     4,
     true
 );
+
+-- ============================================================================
+-- PIANO CASA 2026 (L.116/2026) — integrazione dal 19 luglio 2026
+-- ============================================================================
+INSERT INTO knowledge_documents (id, title, source, source_reference, content, tags, priority, is_active) VALUES
+(
+    'kb-pc-001',
+    'Piano Casa 2026 (L.116/2026) — Panoramica',
+    'legge',
+    'Legge 4 luglio 2026, n. 116 (conversione D.L. 23 aprile 2026, n. 66)',
+    'Il Piano Casa è la legge n. 116 del 4 luglio 2026, di conversione del D.L. 66/2026, che riforma il sostegno alla locazione e all''abitare in Italia. Obiettivi: ridurre il gap domanda/offerta abitativa, rafforzare le tutele dell''inquilino, incentivare rigenerazione e social housing, istituire Fondo di garanzia per i depositi cauzionali. La legge incide su canoni concordati, rent-to-buy, morosità incolpevole e co-housing.',
+    ARRAY['piano-casa', 'l-116-2026', 'riforma', 'tutele', 'abitare'],
+    6,
+    true
+),
+(
+    'kb-pc-002',
+    'Piano Casa — Canone concordato e riduzione IMU',
+    'legge',
+    'L. 431/1998 art. 2-bis; L. 116/2026 (IMU)',
+    'I contratti a canone concordato (L. 431/1998 art. 2-bis) ottengono con il Piano Casa una riduzione del 50% dell''IMU per il proprietario. Requisiti: accordo territoriale tra proprietari e organizzazioni inquilini (SUNIA, UNIAT), durata minima 3+2 anni, comuni con emergenza abitativa. Impatto inquilino: canone mediamente 20-30% sotto il libero mercato.',
+    ARRAY['piano-casa', 'canone-concordato', 'imu', 'accordi-territoriali'],
+    6,
+    true
+),
+(
+    'kb-pc-003',
+    'Piano Casa — Rent-to-buy abitativo',
+    'legge',
+    'L. 116/2026 (rent-to-buy); Codice Civile artt. 1521-1531',
+    'Il Piano Casa regola forme di affitto con riscatto (rent-to-buy) per giovani coppie e lavoratori precari. Meccanismo: parte del canone imputata a caparra confirmatoria per futuro acquisto, contratto trascritto nei registri immobiliari, durata 5-10 anni. Attenzione: la quota imputata al riscatto deve essere esplicita per iscritto, pena nullità della clausola.',
+    ARRAY['piano-casa', 'rent-to-buy', 'giovani', 'precari', 'proprietà'],
+    6,
+    true
+),
+(
+    'kb-pc-004',
+    'Piano Casa — Morosità incolpevole',
+    'legge',
+    'L. 116/2026 (morosità incolpevole); L. 392/1978 art. 5',
+    'Se la morosità dipende da causa indipendente dalla volontà (perdita lavoro, malattia grave), scattano tutele: sospensione procedura esecutiva su richiesta documentata, accesso a fondo di garanzia comunale, rateizzazione arretrati. Documenti utili: buste paga, certificati medici, comunicazioni a casa.',
+    ARRAY['piano-casa', 'morosità', 'sfratto', 'tutele', 'fondo'],
+    7,
+    true
+),
+(
+    'kb-pc-005',
+    'Piano Casa — Co-housing e Social Housing',
+    'legge',
+    'L. 116/2026 (co-housing); D.P.R. 448/1999',
+    'Il Piano Casa regola il co-housing (convivenza pianificata con spazi comuni) e lo social housing (alloggi a canone sostenibile gestiti da enti no-profit o pubblici). Tutele: contratti tipo con clausole standard tutelate, durata minima, canone vincolato a ISTAT.',
+    ARRAY['piano-casa', 'co-housing', 'social-housing', 'convivenza'],
+    5,
+    true
+),
+(
+    'kb-pc-006',
+    'Piano Casa — Fondo di garanzia depositi',
+    'legge',
+    'L. 392/1978 art. 11; L. 116/2026 (fondo)',
+    'Istituito fondo per coprire il proprietario in caso di danni o morosità, riducendo la richiesta di depositi eccessivi. Il deposito cauzionale resta max 3 mensilità (L. 392/1978), ma il fondo rende i proprietari più disponibili ad accettare garanzie alternative.',
+    ARRAY['piano-casa', 'deposito', 'fondo-garanzia', 'tutele'],
+    6,
+    true
+),
+(
+    'kb-pc-007',
+    'Piano Casa — Come verificare se il tuo contratto ne beneficia',
+    'prassi',
+    'L. 431/1998; L. 116/2026; L. 392/1978',
+    'Checklist: 1) Tipo contratto: è a canone concordato (3+2 con accordo territoriale)? 2) Comune: rientra nelle aree di emergenza abitativa? 3) Durata: hai firmato per almeno 3 anni? 4) Clausole: il deposito è entro 3 mensilità? 5) Aggiornamento: l''ISTAT è applicato al 75% max? Se 3+ risposte positive → il contratto è conforme o migliorabile col Piano Casa.',
+    ARRAY['piano-casa', 'checklist', 'verifica', 'contratto'],
+    7,
+    true
+);

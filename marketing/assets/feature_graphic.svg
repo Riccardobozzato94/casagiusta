@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <!-- Feature Graphic (Google Play) -->
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#131a2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="500" fill="url(#bg2)"/>
+  <!-- Glow -->
+  <circle cx="820" cy="250" r="220" fill="#4f8cff" opacity="0.15"/>
+  <!-- House icon left -->
+  <path d="M180 180 L300 270 L300 420 L60 420 L60 270 Z" fill="#4f8cff"/>
+  <path d="M180 150 L320 260 L40 260 Z" fill="#ffffff"/>
+  <!-- Shield -->
+  <path d="M180 210 L240 235 L240 300 Q240 350 180 380 Q120 350 120 300 L120 235 Z" fill="#2ee6a6"/>
+  <path d="M155 300 L175 322 L210 282" stroke="#04231a" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Text right -->
+  <text x="400" y="200" font-family="-apple-system, sans-serif" font-size="76" font-weight="900" fill="#e8edf7">CasaGiusta</text>
+  <text x="400" y="260" font-family="-apple-system, sans-serif" font-size="34" font-weight="600" fill="#8b97b3">La tua casa, i tuoi diritti</text>
+  <text x="400" y="330" font-family="-apple-system, sans-serif" font-size="28" font-weight="700" fill="#2ee6a6">IA • Prove • Piano Casa 2026</text>
+  <!-- Pill -->
+  <rect x="400" y="370" width="320" height="60" rx="30" fill="#4f8cff"/>
+  <text x="560" y="410" font-family="-apple-system, sans-serif" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">Prova gratis →</text>
+</svg>

@@ -349,4 +349,125 @@ export const KNOWLEDGE_DOCUMENTS: KnowledgeDocument[] = [
     validFrom: '2026-01-01',
     isActive: true,
   },
+
+  // ============================================================================
+  // PIANO CASA 2026 (L.116/2026) — integrazione dal 19 luglio 2026
+  // ============================================================================
+  {
+    id: 'pc-001-pianocasa-overview',
+    title: 'Piano Casa 2026 (L.116/2026) — Panoramica',
+    source: 'legge',
+    sourceReference: 'Legge 4 luglio 2026, n. 116 (conversione D.L. 23 aprile 2026, n. 66)',
+    content: `Il Piano Casa è la legge n. 116 del 4 luglio 2026, di conversione del D.L. 66/2026, che riforma il sostegno alla locazione e all'abitare in Italia.
+
+Obiettivi principali:
+1. Ridurre il gap tra domanda e offerta abitativa
+2. Rafforzare le tutele dell'inquilino
+3. Incentivare la rigenerazione e il social housing
+4. Istituzione di un Fondo di garanzia per i depositi cauzionali
+
+La legge incide su canoni concordati, rent-to-buy, morosità incolpevole e co-housing.`,
+    tags: ['piano-casa', 'l-116-2026', 'riforma', 'tutele', 'abitare'],
+    priority: 6,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
+  {
+    id: 'pc-002-canone-concordato-imu',
+    title: 'Piano Casa — Canone concordato e riduzione IMU',
+    source: 'legge',
+    sourceReference: 'L. 431/1998 art. 2-bis; L. 116/2026 (IMU)',
+    content: `I contratti a canone concordato (L. 431/1998 art. 2-bis) ottengono con il Piano Casa una riduzione del 50% dell'IMU per il proprietario, stimolando offerte più basse per l'inquilino.
+
+Requisiti:
+- Accordo territoriale tra proprietari e organizzazioni inquilini (es. SUNIA, UNIAT)
+- Durata minima 3+2 anni
+- Comuni con emergenza abitativa o alto disagio
+
+Impatto inquilino: canone mediamente 20-30% sotto il libero mercato.`,
+    tags: ['piano-casa', 'canone-concordato', 'imu', 'accordi-territoriali'],
+    priority: 6,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
+  {
+    id: 'pc-003-rent-to-buy',
+    title: 'Piano Casa — Rent-to-buy abitativo',
+    source: 'legge',
+    sourceReference: 'L. 116/2026 (rent-to-buy); Codice Civile artt. 1521-1531',
+    content: `Il Piano Casa regola forme di affitto con riscatto (rent-to-buy) per favorire l'accesso alla proprietà di giovani coppie e lavoratori precari.
+
+Meccanismo:
+- Parte del canone è imputata a caparra confirmatoria per futuro acquisto
+- Contratto trascritto nei registri immobiliari
+- Durata tipica 5-10 anni
+
+Attenzione: verificare che la quota imputata al riscatto sia esplicita per iscritto. La clausola è nulla se omessa.`,
+    tags: ['piano-casa', 'rent-to-buy', 'giovani', 'precari', 'proprietà'],
+    priority: 6,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
+  {
+    id: 'pc-004-morosita-incolpevole',
+    title: 'Piano Casa — Morosità incolpevole',
+    source: 'legge',
+    sourceReference: 'L. 116/2026 (morosità incolpevole); L. 392/1978 art. 5',
+    content: `Novità centrale per gli inquilini: se la morosità dipende da causa indipendente dalla volontà (perdita lavoro, malattia grave), scattano tutele che sospendono lo sfratto e attivano fondi di sostegno.
+
+Diritti:
+- Sospensione procedura esecutiva su richiesta documentata
+- Accesso a fondo di garanzia comunale
+- Possibilità di rateizzazione arretrati
+
+Documenti utili: buste paga, certificati medici, comunicazioni a casa.`,
+    tags: ['piano-casa', 'morosità', 'sfratto', 'tutele', 'fondo'],
+    priority: 7,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
+  {
+    id: 'pc-005-cohousing-social',
+    title: 'Piano Casa — Co-housing e Social Housing',
+    source: 'legge',
+    sourceReference: 'L. 116/2026 (co-housing); D.P.R. 448/1999',
+    content: `Il Piano Casa regola il co-housing (convivenza pianificata con spazi comuni) e lo social housing (alloggi a canone sostenibile gestiti da enti no-profit o pubblici).
+
+Tutele: contratti tipo con clausole standard tutelate, durata minima, canone vincolato a ISTAT.`,
+    tags: ['piano-casa', 'co-housing', 'social-housing', 'convivenza'],
+    priority: 5,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
+  {
+    id: 'pc-006-fondo-garanzia-depositi',
+    title: 'Piano Casa — Fondo di garanzia depositi',
+    source: 'legge',
+    sourceReference: 'L. 392/1978 art. 11; L. 116/2026 (fondo)',
+    content: `Istituito fondo per coprire il proprietario in caso di danni o morosità, riducendo la richiesta di depositi eccessivi all'inquilino.
+
+Il deposito cauzionale resta max 3 mensilità (L. 392/1978), ma il fondo rende i proprietari più disponibili ad accettare garanzie alternative.`,
+    tags: ['piano-casa', 'deposito', 'fondo-garanzia', 'tutele'],
+    priority: 6,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
+  {
+    id: 'pc-007-checklist-verifica',
+    title: 'Piano Casa — Come verificare se il tuo contratto ne beneficia',
+    source: 'prassi',
+    sourceReference: 'L. 431/1998; L. 116/2026; L. 392/1978',
+    content: `Checklist per valutare se il contratto beneficia del Piano Casa:
+1. Tipo contratto: è a canone concordato (3+2 con accordo territoriale)?
+2. Comune: rientra nelle aree di emergenza abitativa?
+3. Durata: hai firmato per almeno 3 anni?
+4. Clausole: il deposito è entro 3 mensilità?
+5. Aggiornamento: l'ISTAT è applicato al 75% max?
+
+Se 3+ risposte positive → il contratto è conforme o migliorabile col Piano Casa.`,
+    tags: ['piano-casa', 'checklist', 'verifica', 'contratto'],
+    priority: 7,
+    validFrom: '2026-07-04',
+    isActive: true,
+  },
 ];
