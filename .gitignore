@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+.next/
+build/
+.expo/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.production
+.env.*.local
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Supabase
+supabase/.temp
+supabase/.branches
+
+# Turbo
+.turbo
+
+# Coverage
+coverage/
+*.lcov
+
+# Sentry
+.sentryclirc
+
+# Expo
+apps/mobile/*.jks
+apps/mobile/*.p8
+apps/mobile/*.p12
+apps/mobile/*.key
+apps/mobile/*.mobileprovision
+apps/mobile/*.provisionprofile
+apps/mobile/certs/
+apps/mobile/credentials.json

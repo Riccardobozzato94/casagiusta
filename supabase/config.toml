@@ -1,0 +1,70 @@
+# ============================================================================
+# CasaGiusta — Supabase Configuration
+# ============================================================================
+[AUTH]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = [
+  "https://casagiusta.vercel.app/**",
+  "casagiusta://**"
+]
+
+[AUTH.MAILER]
+enabled = true
+mailer_autoconfirm = false
+
+[AUTH.MAILER.TEMPLATES]
+magic_link = "Ciao! Ecco il tuo link per accedere a CasaGiusta: {{ .ConfirmationURL }}\n\nIl link scade tra 1 ora."
+
+[API]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+
+[DB]
+port = 54322
+major_version = 16
+
+[DB.POOLER]
+enabled = false
+
+[ANALYTICS]
+enabled = true
+port = 54327
+vector = true
+
+[STORAGE]
+enabled = true
+s3_protocol = "https"
+s3_endpoint = "https://storage.googleapis.com"
+
+[EDGE_FUNCTIONS]
+enabled = true
+port = 54321
+verify_jwt = true
+import_map = "./functions/import_map.json"
+
+[EDGE_FUNCTIONS.AI_ORCHESTRATOR]
+verify_jwt = true
+
+[EDGE_FUNCTIONS.ISTAT_CALCULATOR]
+verify_jwt = true
+
+[EDGE_FUNCTIONS.GENERATE_PDF]
+verify_jwt = true
+
+[EDGE_FUNCTIONS.OCR_WEBHOOK]
+verify_jwt = false  # Called by Google Cloud Vision webhook
+
+[EDGE_FUNCTIONS.GENERATE_TEMPLATE]
+verify_jwt = true
+
+[EDGE_FUNCTIONS.EVIDENCE_HASH]
+verify_jwt = true
+
+[EDGE_FUNCTIONS.SEARCH_LAWYERS]
+verify_jwt = false  # Public search
+
+[REALTIME]
+enabled = true

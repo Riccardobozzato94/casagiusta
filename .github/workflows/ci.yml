@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: "22"
+  SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+
+jobs:
+  lint:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run test
+
+  supabase-preview:
+    name: Supabase Preview
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start Supabase local
+        run: supabase start
+      - name: Run migrations
+        run: supabase db push
+      - name: Seed database
+        run: supabase db execute --file supabase/seed.sql
+      - name: Comment PR with status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Supabase migration applied successfully. Database is ready for review.'
+            })
+
+  deploy-functions:
+    name: Deploy Edge Functions
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Deploy functions
+        run: |
+          supabase functions deploy ai-orchestrator --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+          supabase functions deploy istat-calculator --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+          supabase functions deploy generate-pdf --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+          supabase functions deploy ocr-webhook --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+          supabase functions deploy generate-template --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+          supabase functions deploy evidence-hash --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+          supabase functions deploy search-lawyers --project-ref ${{ env.SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
