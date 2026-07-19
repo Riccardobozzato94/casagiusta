@@ -164,7 +164,50 @@ comment on column contracts.ai_analysis is 'Risultati analisi AI: clausole vessa
 
 
 -- ---------------------------------------------------------------------------
--- 3.4 evidence
+-- 3.4 cases
+-- ---------------------------------------------------------------------------
+create table cases (
+    id                       uuid        primary key default gen_random_uuid(),
+    user_id                  uuid        not null references users(id) on delete cascade,
+    type                     case_type   not null,
+    status                   case_status not null default 'aperta',
+    title                    text        not null,
+    description              text,
+    ai_summary               text,
+    timeline                 jsonb       not null default '[]'::jsonb,
+    target_name              text,
+    target_address_encrypted text,
+    priority                 int         not null default 0,
+    deadline                 timestamptz,
+    resolved_at              timestamptz,
+    created_at               timestamptz not null default now(),
+    updated_at               timestamptz
+);
+
+comment on table cases is 'Pratiche legali degli inquilini';
+comment on column cases.timeline is 'Array JSON di eventi strutturati: [{timestamp, action, description, actor}]';
+comment on column cases.priority is '0-5 (0=nessuna urgenza, 5=urgentissimo — sfratto esecutivo)';
+comment on column cases.target_name is 'Nome del proprietario o agenzia immobiliare';
+
+
+-- ---------------------------------------------------------------------------
+-- 3.5 case_actions
+-- ---------------------------------------------------------------------------
+create table case_actions (
+    id          uuid        primary key default gen_random_uuid(),
+    case_id     uuid        not null references cases(id) on delete cascade,
+    action_type text        not null,
+    description text,
+    metadata    jsonb,
+    created_at  timestamptz not null default now()
+);
+
+comment on table case_actions is 'Storico cronologico delle azioni compiute su una pratica';
+comment on column case_actions.action_type is 'Es: diffida_inviata, email_inviata, pdf_generato, avvocato_contattato, promemoria';
+
+
+-- ---------------------------------------------------------------------------
+-- 3.6 evidence
 -- ---------------------------------------------------------------------------
 create table evidence (
     id                     uuid            primary key default gen_random_uuid(),
@@ -192,49 +235,6 @@ comment on column evidence.file_hash is 'SHA-256 calcolato lato client prima del
 comment on column evidence.blockchain_hash is 'Timestamp su blockchain (OpenTimestamps) per integrità legale';
 comment on column evidence.client_side_encrypted is 'true se il file è cifrato lato client prima dell''upload';
 comment on column evidence.is_deleted is 'Soft delete: rimuove solo il riferimento, non il file';
-
-
--- ---------------------------------------------------------------------------
--- 3.5 cases
--- ---------------------------------------------------------------------------
-create table cases (
-    id                       uuid        primary key default gen_random_uuid(),
-    user_id                  uuid        not null references users(id) on delete cascade,
-    type                     case_type   not null,
-    status                   case_status not null default 'aperta',
-    title                    text        not null,
-    description              text,
-    ai_summary               text,
-    timeline                 jsonb       not null default '[]'::jsonb,
-    target_name              text,
-    target_address_encrypted text,
-    priority                 int         not null default 0,
-    deadline                 timestamptz,
-    resolved_at              timestamptz,
-    created_at               timestamptz not null default now(),
-    updated_at               timestamptz
-);
-
-comment on table cases is 'Pratiche legali degli inquilini';
-comment on column cases.timeline is 'Array JSON di eventi strutturati: [{timestamp, action, description, actor}]';
-comment on column cases.priority is '0-5 (0=nessuna urgenza, 5=urgentissimo — sfratto esecutivo)';
-comment on column cases.target_name is 'Nome del proprietario o agenzia immobiliare';
-
-
--- ---------------------------------------------------------------------------
--- 3.6 case_actions
--- ---------------------------------------------------------------------------
-create table case_actions (
-    id          uuid        primary key default gen_random_uuid(),
-    case_id     uuid        not null references cases(id) on delete cascade,
-    action_type text        not null,
-    description text,
-    metadata    jsonb,
-    created_at  timestamptz not null default now()
-);
-
-comment on table case_actions is 'Storico cronologico delle azioni compiute su una pratica';
-comment on column case_actions.action_type is 'Es: diffida_inviata, email_inviata, pdf_generato, avvocato_contattato, promemoria';
 
 
 -- ---------------------------------------------------------------------------
@@ -384,11 +384,13 @@ comment on column subscriptions.status is 'active, past_due, canceled, incomplet
 -- 3.14 knowledge_documents
 -- ---------------------------------------------------------------------------
 create table knowledge_documents (
-    id               uuid        primary key default gen_random_uuid(),
+    id               text        primary key,
     title            text        not null,
     source           text,
     source_reference text,
     content          text        not null,
+    tags             text[],
+    priority         int         not null default 0,
     embedding        vector(1536),
     metadata         jsonb,
     is_active        boolean     not null default true,
@@ -399,6 +401,8 @@ comment on table knowledge_documents is 'Knowledge base giuridica per RAG (leggi
 comment on column knowledge_documents.source is 'legge, decreto, sentenza, contratto-tipo';
 comment on column knowledge_documents.source_reference is 'Riferimento normativo completo: es. "L. 9 dicembre 1998, n. 431"';
 comment on column knowledge_documents.embedding is 'Vettore OpenAI text-embedding-3-small (1536 dimensioni) per similarity search';
+comment on column knowledge_documents.tags is 'Tag per filtraggio e categorizzazione';
+comment on column knowledge_documents.priority is '0-5: priorità del documento nel ranking RAG';
 
 
 -- ---------------------------------------------------------------------------
@@ -593,15 +597,15 @@ create policy "users_update_own"
 -- ---------------------------------------------------------------------------
 create policy "profiles_view_own"
     on profiles for select
-    using (user_id = auth.uid());
+    using (id = auth.uid());
 
 create policy "profiles_insert_own"
     on profiles for insert
-    with check (user_id = auth.uid());
+    with check (id = auth.uid());
 
 create policy "profiles_update_own"
     on profiles for update
-    using (user_id = auth.uid());
+    using (id = auth.uid());
 
 -- ---------------------------------------------------------------------------
 -- 6.4 Contracts policies
@@ -856,6 +860,7 @@ create policy "audit_log_admin_select"
 --   Public: true
 --   Policy SELECT: (bucket_id = 'knowledge-docs'::text) -- pubblico
 
+
 -- ============================================================================
 -- 8. REALTIME SUBSCRIPTIONS
 -- ============================================================================
@@ -864,53 +869,3 @@ create policy "audit_log_admin_select"
 alter publication supabase_realtime add table cases;
 alter publication supabase_realtime add table case_actions;
 alter publication supabase_realtime add table ai_conversations;
-
-
--- ============================================================================
--- 9. SEED DATA
--- ============================================================================
-
--- Knowledge base giuridica iniziale
-insert into knowledge_documents (title, source, source_reference, content) values
-(
-    'Legge 431/1998 — Disciplina delle locazioni',
-    'legge',
-    'L. 9 dicembre 1998, n. 431',
-    'Legge che disciplina le locazioni abitative, introducendo i contratti a canone concordato (3+2) e libero (4+4), le procedure per l''aggiornamento del canone, e le tutele per l''inquilino. Art. 1: Ambito di applicazione. Art. 2: Tipologie contrattuali. Art. 3: Canone libero e canone concordato. Art. 4: Durata minima dei contratti. Art. 5: Aggiornamento ISTAT. Art. 6: Deposito cauzionale. Art. 7: Recesso del conduttore. Art. 8: Successione nel contratto. Art. 9: Sublocazione. Art. 10: Agevolazioni fiscali. Art. 11: Risoluzione del contratto. Art. 12: Procedura per lo sfratto.'
-),
-(
-    'Codice Civile — Della locazione (artt. 1571-1654)',
-    'codice',
-    'Codice Civile, Libro IV, Titolo II, Capo I',
-    'Disposizioni generali sulla locazione. Art. 1571: Nozione di locazione. Art. 1572: Capacità di concedere in locazione. Art. 1573: Durata della locazione. Art. 1574: Locazione a tempo indeterminato. Art. 1575: Obbligazioni del locatore. Art. 1576: Manutenzione dell''immobile. Art. 1577: Vizi della cosa locata. Art. 1578: Garanzia per i vizi. Art. 1579: Vizi che espongono a pericolo. Art. 1580: Nullità del contratto. Art. 1581: Locazione di cose altrui. Art. 1582: Obbligazioni del conduttore. Art. 1583: Deterioramento da uso. Art. 1584: Pagamento del canone. Art. 1585: Azioni del conduttore. Art. 1586: Cessione del contratto e sublocazione. Art. 1587: Riconsegna dell''immobile. Art. 1588: Perimento della cosa locata. Art. 1589: Risoluzione del contratto. Art. 1590: Miglioramenti e addizioni. Art. 1591: Indennità per miglioramenti. Art. 1592: Addizioni. Art. 1593: Prelazione del conduttore. Art. 1594: Diritto di prelazione nella vendita. Art. 1595: Successione nel contratto. Art. 1596-1654: Disposizioni relative ai diversi tipi di locazione.'
-),
-(
-    'Decreto Legge 66/2026 — Piano Casa e misure urgenti per l''abitazione',
-    'decreto-legge',
-    'D.L. 7 maggio 2026, n. 66',
-    'Disposizioni urgenti in materia di politiche abitative. Contiene misure per: ampliamento offerta alloggi pubblici, contributi affitto per famiglie a basso reddito, potenziamento fondo morosità incolpevole, agevolazioni per contratti a canone concordato, contrasto alla locazione irregolare, nuovo sistema di registrazione contratti, digitalizzazione procedure sfratti, e tutela inquilini in situazione di fragilità. In vigore dal 8 maggio 2026.'
-),
-(
-    'Codice Civile — Delle obbligazioni (artt. 1173-1320)',
-    'codice',
-    'Codice Civile, Libro IV, Titolo I',
-    'Principi generali delle obbligazioni applicabili ai contratti di locazione. Art. 1173: Fonti delle obbligazioni. Art. 1175: Correttezza. Art. 1176: Diligenza. Art. 1218: Responsabilità del debitore. Art. 1223: Danno risarcibile. Art. 1224: Danni da inadempimento. Art. 1321: Nozione di contratto. Art. 1322: Autonomia contrattuale. Art. 1325: Requisiti del contratto. Art. 1337: Trattative e responsabilità precontrattuale. Art. 1341: Condizioni generali di contratto. Art. 1342: Clausole vessatorie. Art. 1362-1371: Interpretazione del contratto. Art. 1418: Nullità del contratto. Art. 1427: Annullabilità. Art. 1453-1469: Risoluzione del contratto.'
-),
-(
-    'Legge 392/1978 — Disciplina delle locazioni urbane (Legge sull''equo canone)',
-    'legge',
-    'L. 27 luglio 1978, n. 392',
-    'Storica legge sull''equo canone, ancora rilevante per contratti precedenti al 1998 e per alcune disposizioni non abrogate. Art. 1-15: Determinazione del canone. Art. 16-26: Durata e recesso. Art. 27-36: Successione e sublocazione. Art. 37-49: Procedura per lo sfratto. Art. 50-60: Agevolazioni e disposizioni finali. La legge è stata in gran parte sostituita dalla L. 431/1998 ma rimane in vigore per i contratti stipulati prima del 30 dicembre 1998 e per alcune norme procedurali non abrogate.'
-),
-(
-    'Costituzione Italiana — Art. 47: Diritto alla casa',
-    'costituzione',
-    'Costituzione della Repubblica Italiana, Art. 47',
-    'La Repubblica incoraggia e protegge il risparmio in tutte le sue forme; disciplina, coordina e controlla l''esercizio del credito. Favorisce l''accesso del risparmio popolare alla proprietà dell''abitazione, alla proprietà diretta coltivatrice e al diretto investimento azionario nei grandi complessi produttivi del paese.'
-),
-(
-    'D.Lgs. 150/2011 — Disposizioni per la semplificazione dei procedimenti civili',
-    'decreto-legislativo',
-    'D.Lgs. 1 settembre 2011, n. 150',
-    'Riforma dei procedimenti sommari di cognizione. Art. 1: Ambito di applicazione. Art. 2: Procedimento sommario di cognizione. Art. 3-14: Disposizioni specifiche per controversie in materia di locazione. Art. 14: Opposizione a ordinanza di convalida di sfratto. Art. 15: Procedimento per convalida. Art. 16: Esecuzione. Contiene le norme processuali per le controversie locative, inclusa la procedura per sfratto per morosità e per finita locazione.'
-);
