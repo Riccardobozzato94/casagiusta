@@ -11,8 +11,6 @@ import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/providers/ThemeProvider';
 
-type TemaScelta = 'sistema' | 'chiaro' | 'scuro';
-
 function MenuItem({
   icon,
   label,
@@ -94,11 +92,10 @@ function SectionHeader({ label }: { label: string }) {
 }
 
 export default function ProfiloScreen() {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, themeMode, setThemeMode } = useTheme();
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  const [tema, setTema] = useState<TemaScelta>('sistema');
   const [lowStimulus, setLowStimulus] = useState(false);
   const [privacyMode, setPrivacyMode] = useState(false);
   const [notifiche, setNotifiche] = useState(true);
@@ -173,14 +170,11 @@ export default function ProfiloScreen() {
           <MenuItem
             icon={'\u{1F3A8}'}
             label="Tema"
-            value={tema.charAt(0).toUpperCase() + tema.slice(1)}
+            value={themeMode.charAt(0).toUpperCase() + themeMode.slice(1)}
             onPress={() => {
-              const opzioni: TemaScelta[] = ['sistema', 'chiaro', 'scuro'];
-              const idx = (opzioni.indexOf(tema) + 1) % opzioni.length;
-              setTema(opzioni[idx]);
-              if (opzioni[idx] !== 'sistema') {
-                toggleTheme?.();
-              }
+              const opzioni = ['system', 'light', 'dark'] as const;
+              const idx = (opzioni.indexOf(themeMode) + 1) % opzioni.length;
+              setThemeMode(opzioni[idx]);
             }}
           />
           <SwitchItem

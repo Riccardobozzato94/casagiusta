@@ -58,9 +58,9 @@ function gruppoData(data: Date): string {
 }
 
 const MOCK_NOTIFICHE: Notifica[] = [
-  { id: 'n1', tipo: 'caso', titolo: 'Aggiornamento caso', corpo: 'Il caso "Deposito cauzionale" ha ricevuto una nuova risposta dal legale.', timestamp: new Date(Date.now() - 5 * 60000), letta: false, azione: '/casi/n1' },
+  { id: 'n1', tipo: 'caso', titolo: 'Aggiornamento caso', corpo: 'Il caso "Deposito cauzionale" ha ricevuto una nuova risposta dal legale.', timestamp: new Date(Date.now() - 5 * 60000), letta: false, azione: '/casi/1' },
   { id: 'n2', tipo: 'ai_risposta', titolo: 'Giusta ha risposto', corpo: 'La tua richiesta sull\'aggiornamento ISTAT è pronta. Leggi il parere legale personalizzato.', timestamp: new Date(Date.now() - 30 * 60000), letta: false, azione: '/giusta' },
-  { id: 'n3', tipo: 'community', titolo: 'Nuovo messaggio nel forum', corpo: 'Qualcuno ha risposto al tuo post "Aumento canone ingiustificato".', timestamp: new Date(Date.now() - 2 * 3600000), letta: false, azione: '/forum' },
+  { id: 'n3', tipo: 'community', titolo: 'Nuovo messaggio nel forum', corpo: 'Qualcuno ha risposto al tuo post "Aumento canone ingiustificato".', timestamp: new Date(Date.now() - 2 * 3600000), letta: false, azione: '/' },
   { id: 'n4', tipo: 'promemoria', titolo: 'Promemoria scadenza', corpo: 'Il contratto scade tra 30 giorni. Ti consigliamo di preparare la disdetta.', timestamp: new Date(Date.now() - 5 * 3600000), letta: true },
   { id: 'n5', tipo: 'sistema', titolo: 'Nuova funzionalità disponibile', corpo: 'Ora puoi cercare avvocati specializzati in diritto locatizio nella tua zona.', timestamp: new Date(Date.now() - 24 * 3600000), letta: true, azione: '/avvocati' },
   { id: 'n6', tipo: 'caso', titolo: 'Documento richiesto', corpo: 'Il legale ha richiesto un documento aggiuntivo per il caso Sfratto minacciato.', timestamp: new Date(Date.now() - 2 * 86400000), letta: true },

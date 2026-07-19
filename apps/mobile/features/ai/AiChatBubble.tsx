@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import type { Citation } from '@casagiusta/shared/src/types/ai';
 
@@ -21,8 +21,8 @@ export function AiChatBubble({ message, citations, isLoading }: AiChatBubbleProp
         <View className="bg-surface-secondary dark:bg-surface-dark-secondary rounded-2xl rounded-tl-sm p-4 max-w-[80%]">
           <View className="flex-row space-x-1">
             <View className="w-2 h-2 bg-primary-600 rounded-full animate-pulse" />
-            <View className="w-2 h-2 bg-primary-600 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
-            <View className="w-2 h-2 bg-primary-600 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
+            <View className="w-2 h-2 bg-primary-600 rounded-full animate-pulse" />
+            <View className="w-2 h-2 bg-primary-600 rounded-full animate-pulse" />
           </View>
         </View>
       </View>

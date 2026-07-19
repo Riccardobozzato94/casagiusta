@@ -5,7 +5,6 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
-  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -238,7 +237,7 @@ export default function HomeScreen() {
           </View>
         ) : (
           <View className="px-5">
-            <EmptyContrattoCard onPress={() => router.push('/contratto/nuovo')} />
+            <EmptyContrattoCard onPress={() => router.push('/onboarding/upload-contract')} />
           </View>
         )}
 

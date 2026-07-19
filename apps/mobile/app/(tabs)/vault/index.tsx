@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -157,7 +157,7 @@ export default function VaultScreen() {
             if (index === 0) {
               // condividi
             } else if (index === 1) {
-              router.push(`/casi/associa?provaId=${prova.id}`);
+              router.push(`/casi/nuovo`);
             } else if (index === 2) {
               Alert.alert('Elimina prova', 'Sei sicuro di voler eliminare questa prova?', [
                 { text: 'Annulla', style: 'cancel' },
@@ -271,7 +271,7 @@ export default function VaultScreen() {
               <ProvaCard
                 key={p.id}
                 prova={p}
-                onPress={() => router.push(`/vault/${p.id}`)}
+                onPress={() => Alert.alert(p.titolo, `${p.descrizione}\n\nHash: ${p.hash}\nData: ${formatRelativeDate(p.data)}`)}
                 onLongPress={() => handleLongPress(p)}
               />
             ))

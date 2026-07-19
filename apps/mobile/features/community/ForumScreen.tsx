@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Modal,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '@/lib/supabase';
@@ -64,7 +65,9 @@ export function ForumScreen() {
   const [filteredPosts, setFilteredPosts] = useState<ForumPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tutti');
   const [selectedCity, setSelectedCity] = useState<string>('Tutte');
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
   const [comments, setComments] = useState<ForumComment[]>([]);
   const [showNewPost, setShowNewPost] = useState(false);
@@ -72,7 +75,7 @@ export function ForumScreen() {
   const [newPostCategory, setNewPostCategory] = useState('Consigli');
 
   useEffect(() => {
-    loadPosts();
+    loadPosts().finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -80,12 +83,15 @@ export function ForumScreen() {
   }, [posts, selectedCategory, selectedCity]);
 
   const loadPosts = async () => {
-    const { data } = await supabase
+    setError(null);
+    const { data, error: err } = await supabase
       .from('community_posts')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(50);
-    if (data) {
+    if (err) {
+      setError(err.message);
+    } else if (data) {
       setPosts(data as ForumPost[]);
     }
   };
@@ -259,7 +265,30 @@ export function ForumScreen() {
       </View>
 
       {/* Posts list */}
-      {filteredPosts.length > 0 ? (
+      {loading ? (
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color="#0d9488" />
+          <Text className="mt-4 text-text-secondary dark:text-text-dark-secondary text-sm">
+            Caricamento post...
+          </Text>
+        </View>
+      ) : error ? (
+        <View className="flex-1 items-center justify-center px-8">
+          <Text className="text-3xl mb-3">{'\u{26A0}\uFE0F'}</Text>
+          <Text className="text-text-primary dark:text-white text-lg font-semibold mb-2 text-center">
+            Errore di caricamento
+          </Text>
+          <Text className="text-text-secondary dark:text-text-dark-secondary text-sm text-center mb-4">
+            {error}
+          </Text>
+          <TouchableOpacity
+            onPress={() => { setLoading(true); loadPosts().finally(() => setLoading(false)); }}
+            className="bg-primary-600 px-6 py-2.5 rounded-xl"
+          >
+            <Text className="text-white font-semibold">Riprova</Text>
+          </TouchableOpacity>
+        </View>
+      ) : filteredPosts.length > 0 ? (
         <FlatList
           data={filteredPosts}
           renderItem={renderPost}

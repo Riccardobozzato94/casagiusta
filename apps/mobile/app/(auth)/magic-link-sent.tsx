@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -23,7 +23,6 @@ export default function MagicLinkSentScreen() {
     if (countdown > 0) return;
     setResending(true);
     try {
-      const { signInWithMagicLink } = await import('@/providers/AuthProvider');
       const { useAuthStore } = await import('@/providers/AuthProvider');
       const store = useAuthStore.getState?.();
       if (store) {
