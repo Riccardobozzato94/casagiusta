@@ -278,6 +278,11 @@ export default function HomeScreen() {
             label="Parla con Giusta"
             onPress={() => router.push('/giusta')}
           />
+          <QuickAction
+            icon={'\u{1F3E2}'}
+            label="Trova un avvocato"
+            onPress={() => router.push('/avvocati')}
+          />
         </View>
       </ScrollView>
     </View>

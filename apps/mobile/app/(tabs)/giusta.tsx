@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 
 type Message = {
@@ -140,6 +141,7 @@ function LoadingDots() {
 export default function GiustaScreen() {
   const { isDark } = useTheme();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
   const [messaggi, setMessaggi] = useState<Message[]>([BENVENUTO]);
   const [input, setInput] = useState('');
@@ -283,7 +285,7 @@ export default function GiustaScreen() {
             </Text>
             <TouchableOpacity
               className="mt-3 bg-teal-600 rounded-lg py-2 px-6"
-              onPress={() => {}}
+              onPress={() => router.push('/abbonamento')}
               accessibilityLabel="Passa a Pro"
               accessibilityRole="button"
             >

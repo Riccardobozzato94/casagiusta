@@ -24,8 +24,21 @@ export type EmergencyRoutes = {
   'kit-generato': { reportId: string };
 };
 
+export type ModalRoutes = {
+  abbonamento: undefined;
+};
+
+export type StackRoutes = {
+  notifiche: undefined;
+  avvocati: undefined;
+};
+
+export type LawyerRoutes = {
+  'avvocati/[id]': { id: string };
+};
+
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends AuthRoutes, OnboardingRoutes, TabRoutes, EmergencyRoutes {}
+    interface RootParamList extends AuthRoutes, OnboardingRoutes, TabRoutes, EmergencyRoutes, ModalRoutes, StackRoutes, LawyerRoutes {}
   }
 }

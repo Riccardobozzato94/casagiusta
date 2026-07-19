@@ -142,7 +142,7 @@ export default function ProfiloScreen() {
           {piano === 'free' && (
             <TouchableOpacity
               className="mt-3 bg-teal-600 rounded-xl py-2.5 px-6"
-              onPress={() => {}}
+              onPress={() => router.push('/abbonamento')}
               activeOpacity={0.8}
               accessibilityLabel="Passa a Pro"
               accessibilityRole="button"

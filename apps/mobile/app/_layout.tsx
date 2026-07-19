@@ -40,6 +40,16 @@ export default function RootLayout() {
           animation: 'slide_from_bottom',
           presentation: 'modal',
         }} />
+        <Stack.Screen name="abbonamento" options={{
+          animation: 'slide_from_bottom',
+          presentation: 'modal',
+        }} />
+        <Stack.Screen name="notifiche" options={{
+          animation: 'slide_from_right',
+        }} />
+        <Stack.Screen name="avvocati" options={{
+          animation: 'slide_from_right',
+        }} />
       </Stack>
     </AppProviders>
   );
