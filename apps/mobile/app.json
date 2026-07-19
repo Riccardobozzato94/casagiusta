@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "CasaGiusta",
+    "slug": "casagiusta",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "casagiusta",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#0F766E",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "it.casagiusta.app",
+      "associatedDomains": ["applinks:casagiusta.it"],
+      "infoPlist": {
+        "NSCameraUsageDescription": "CasaGiusta usa la fotocamera per fotografare documenti e prove (contratti, danni, comunicazioni). Le foto sono crittografate e private.",
+        "NSPhotoLibraryUsageDescription": "CasaGiusta accede alla galleria per caricare prove fotografiche.",
+        "NSMicrophoneUsageDescription": "CasaGiusta usa il microfono per registrare audio note come prove.",
+        "NSFaceIDUsageDescription": "Usa FaceID per accedere rapidamente a CasaGiusta."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F766E"
+      },
+      "package": "it.casagiusta.app",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECORD_AUDIO",
+        "USE_BIOMETRIC"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [{ "scheme": "casagiusta", "host": "*", "pathPrefix": "/auth" }],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-document-picker",
+      "expo-image-picker",
+      "expo-notifications",
+      "expo-crypto"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
