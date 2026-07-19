@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
   GENERATE_PDF: '/functions/v1/generate-pdf',
   GENERATE_TEMPLATE: '/functions/v1/generate-template',
   EVIDENCE_HASH: '/functions/v1/evidence-hash',
+  OCR_WEBHOOK: '/functions/v1/ocr-webhook',
   SEARCH_LAWYERS: '/functions/v1/search-lawyers',
 } as const;
 

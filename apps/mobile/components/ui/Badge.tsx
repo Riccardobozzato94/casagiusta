@@ -20,7 +20,7 @@ const sizeStyles: Record<string, { container: string; text: string }> = {
   md: { container: 'px-3 py-1', text: 'text-sm' },
 };
 
-export function Badge({ label, variant, size = 'md' }: BadgeProps) {
+export function Badge({ label, variant = 'neutral', size = 'md' }: BadgeProps) {
   const v = variantStyles[variant];
   const s = sizeStyles[size];
 
