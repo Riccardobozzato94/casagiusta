@@ -3,164 +3,434 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CasaGiusta — Mockup Screenshot Store (8 schermate)</title>
+  <title>CasaGiusta — ASO Screenshot Store (8 schermate)</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, system-ui, sans-serif; background: #0a0e1a; padding: 40px 20px; }
-    h1 { color: #e8edf7; text-align: center; margin-bottom: 8px; font-size: 28px; }
-    .sub { color: #8b97b3; text-align: center; margin-bottom: 40px; }
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a; padding: 40px 20px;
+    }
+    h1 { color: #f8fafc; text-align: center; margin-bottom: 4px; font-size: 28px; }
+    .sub { color: #94a3b8; text-align: center; margin-bottom: 8px; }
+    .note {
+      text-align: center; color: #64748b; font-size: 13px; margin-bottom: 36px;
+    }
+    .grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+      max-width: 1200px; margin: 0 auto;
+    }
     @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
-    .phone {
-      background: #131a2e; border-radius: 32px; overflow: hidden; border: 1px solid #1c2540;
-      box-shadow: 0 10px 40px rgba(0,0,0,.4); position: relative;
+
+    .device {
+      background: #1e293b; border-radius: 36px; padding: 10px;
+      border: 1px solid #334155; position: relative;
+      box-shadow: 0 12px 48px rgba(0,0,0,.5);
     }
-    .phone::before {
-      content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-      width: 60px; height: 5px; background: #1c2540; border-radius: 3px; z-index: 10;
+    .device::before {
+      content: ''; position: absolute; top: 12px; left: 50%;
+      transform: translateX(-50%); width: 80px; height: 6px;
+      background: #334155; border-radius: 3px; z-index: 10;
     }
-    .screen { padding: 40px 18px 24px; min-height: 600px; display: flex; flex-direction: column; }
-    .label { background: #4f8cff; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; margin-bottom: 12px; align-self: flex-start; }
-    .scr-title { color: #e8edf7; font-size: 18px; font-weight: 800; margin-bottom: 14px; }
-    .card { background: #1c2540; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-    .card .t { color: #e8edf7; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-    .card .d { color: #8b97b3; font-size: 11px; line-height: 1.4; }
-    .btn { background: linear-gradient(135deg,#4f8cff,#6ba3ff); color:#fff; text-align:center; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 13px; margin-top: auto; }
-    .badge { background: #2ee6a6; color: #04231a; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; display: inline-block; }
-    .chat { background: #1c2540; border-radius: 12px; padding: 12px; font-size: 12px; color: #e8edf7; margin-bottom: 8px; }
-    .chat.ai { border-left: 3px solid #4f8cff; }
-    .chat.me { background: #2a3a5c; text-align: right; }
-    .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1c2540; }
-    .stat-row .k { color: #8b97b3; font-size: 11px; }
-    .stat-row .v { color: #2ee6a6; font-weight: 700; font-size: 12px; }
-    .progress { height: 6px; background: #1c2540; border-radius: 3px; margin: 12px 0; overflow: hidden; }
-    .progress > div { height: 100%; background: #4f8cff; width: 70%; }
-    .price-big { font-size: 32px; font-weight: 900; color: #2ee6a6; text-align: center; margin: 10px 0; }
-    .legend { max-width: 1200px; margin: 40px auto 0; color: #8b97b3; font-size: 13px; line-height: 1.6; }
-    .legend b { color: #e8edf7; }
+    .screen {
+      background: #0f172a; border-radius: 28px; overflow: hidden;
+      aspect-ratio: 9/19.5; display: flex; flex-direction: column;
+      position: relative;
+    }
+    .screen-header {
+      padding: 28px 16px 12px; display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .screen-header .time {
+      font-size: 13px; font-weight: 700; color: #f8fafc;
+    }
+    .screen-header .icons {
+      display: flex; gap: 4px; font-size: 11px;
+    }
+    .screen-content {
+      flex: 1; padding: 8px 14px 14px; display: flex;
+      flex-direction: column; gap: 8px;
+    }
+
+    .label {
+      background: rgba(20,184,166,.15); color: #14b8a6;
+      font-size: 10px; font-weight: 700; padding: 3px 10px;
+      border-radius: 6px; align-self: flex-start; letter-spacing: .3px;
+    }
+    .title { color: #f8fafc; font-size: 16px; font-weight: 800; }
+    .title-sub { color: #94a3b8; font-size: 11px; margin-top: -4px; }
+
+    .card {
+      background: #1e293b; border-radius: 10px; padding: 10px 12px;
+      border: 1px solid #334155;
+    }
+    .card .t { color: #f8fafc; font-size: 12px; font-weight: 600; }
+    .card .d { color: #94a3b8; font-size: 10px; line-height: 1.4; margin-top: 2px; }
+    .card .badge {
+      display: inline-block; background: rgba(249,115,22,.15);
+      color: #f97316; font-size: 9px; font-weight: 800; padding: 2px 7px;
+      border-radius: 4px; margin-bottom: 4px;
+    }
+
+    .stat-row {
+      display: flex; justify-content: space-between; padding: 6px 0;
+      border-bottom: 1px solid #334155; font-size: 11px;
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-row .k { color: #94a3b8; }
+    .stat-row .v { color: #2dd4bf; font-weight: 700; }
+
+    .progress { height: 5px; background: #334155; border-radius: 3px; margin: 8px 0; overflow: hidden; }
+    .progress > div { height: 100%; background: linear-gradient(90deg,#14b8a6,#2dd4bf); border-radius: 3px; }
+
+    .btn-card {
+      background: linear-gradient(135deg,#14b8a6,#2dd4bf); color: #0f172a;
+      text-align: center; padding: 10px; border-radius: 10px;
+      font-weight: 800; font-size: 12px; margin-top: auto;
+    }
+
+    .chat { padding: 8px 10px; border-radius: 10px; font-size: 11px; line-height: 1.5; max-width: 85%; }
+    .chat.me {
+      background: #14b8a6; color: #0f172a;
+      align-self: flex-end; border-bottom-right-radius: 2px;
+    }
+    .chat.ai {
+      background: #1e293b; color: #cbd5e1; border: 1px solid #334155;
+      align-self: flex-start; border-bottom-left-radius: 2px;
+    }
+
+    .price-big { font-size: 28px; font-weight: 900; color: #14b8a6; text-align: center; }
+    .price-big small { font-size: 11px; color: #64748b; font-weight: 500; }
+
+    .vault-item {
+      display: flex; align-items: center; gap: 8px; padding: 8px 0;
+      border-bottom: 1px solid #334155;
+    }
+    .vault-item:last-child { border-bottom: none; }
+    .vault-icon {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .vault-info { flex: 1; }
+    .vault-info .name { font-size: 11px; font-weight: 600; color: #f8fafc; }
+    .vault-info .meta { font-size: 9px; color: #64748b; }
+    .vault-badge {
+      font-size: 9px; background: rgba(16,185,129,.15); color: #10b981;
+      padding: 2px 6px; border-radius: 4px; font-weight: 700;
+    }
+
+    .legend {
+      max-width: 1200px; margin: 40px auto 0; color: #64748b;
+      font-size: 13px; line-height: 1.7;
+    }
+    .legend b { color: #f8fafc; }
   </style>
 </head>
 <body>
-  <h1>CasaGiusta — Mockup Screenshot Store</h1>
-  <p class="sub">8 schermate per App Store / Google Play · Basate su codice reale (apps/mobile/app)</p>
+  <h1>CasaGiusta — ASO Screenshot Store</h1>
+  <p class="sub">8 schermate per App Store / Google Play</p>
+  <p class="note">Basate su apps/mobile/app · Design System v1.0 · 19 Luglio 2026</p>
 
   <div class="grid">
-    <!-- 1. Welcome -->
-    <div class="phone">
+    <!-- 1. Onboarding Welcome -->
+    <div class="device">
       <div class="screen">
-        <span class="label">1 · Onboarding</span>
-        <div class="scr-title">La tua casa,<br>i tuoi diritti 🏠</div>
-        <div class="card"><div class="t">🔍 Analisi contratto</div><div class="d">Scopri se è a norma in 10 secondi</div></div>
-        <div class="card"><div class="t">🤖 Giusta AI</div><div class="d">Risponde ai tuoi dubbi legali</div></div>
-        <div class="card"><div class="t">🔐 Prove sicure</div><div class="d">Crittografate con hash SHA-256</div></div>
-        <div class="btn">Inizia gratis →</div>
-      </div>
-    </div>
-
-    <!-- 2. Upload contratto -->
-    <div class="phone">
-      <div class="screen">
-        <span class="label">2 · Onboarding</span>
-        <div class="scr-title">Carica il contratto 📄</div>
-        <div class="card" style="border: 2px dashed #4f8cff; text-align:center;">
-          <div style="font-size: 40px;">📤</div>
-          <div class="t" style="text-align:center;">Tocca per caricare</div>
-          <div class="d" style="text-align:center;">PDF, foto o scansione</div>
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
         </div>
-        <div class="card"><div class="t">🔒 Privacy</div><div class="d">I tuoi dati restano sul dispositivo</div></div>
-        <div class="progress"><div></div></div>
-        <div class="btn">Analizza ora</div>
-      </div>
-    </div>
-
-    <!-- 3. Contract Result -->
-    <div class="phone">
-      <div class="screen">
-        <span class="label">3 · Risultato</span>
-        <div class="scr-title">Analisi completata ✅</div>
-        <div class="card">
-          <div class="t">Clausole rilevate</div>
-          <div class="stat-row"><span class="k">Durata 4+4</span><span class="v">✓ OK</span></div>
-          <div class="stat-row"><span class="k">Deposito 2 mensilità</span><span class="v">✓ OK</span></div>
-          <div class="stat-row"><span class="k">Agg. ISTAT 100%</span><span class="v" style="color:#ff6b6b;">⚠ Abusivo</span></div>
+        <div class="screen-content" style="align-items:center;justify-content:center;text-align:center;">
+          <div style="font-size:48px;margin-bottom:12px;">&#x1F3E1;</div>
+          <div class="label">NUOVA APP</div>
+          <div class="title" style="font-size:20px;">La tua casa.<br>I tuoi diritti.</div>
+          <p style="color:#94a3b8;font-size:11px;margin:4px 0 16px;line-height:1.5;">
+            Prima piattaforma italiana di tutela attiva per inquilini
+          </p>
+          <div class="card" style="width:100%;">
+            <div class="t">&#x1F50D; Analisi contratto</div>
+            <div class="d">Scopri le clausole abusive in 10 secondi</div>
+          </div>
+          <div class="card" style="width:100%;">
+            <div class="t">&#x1F916; Giusta AI</div>
+            <div class="d">Risponde ai tuoi dubbi legali con citazioni</div>
+          </div>
+          <div class="card" style="width:100%;">
+            <div class="t">&#x1F510; Prove sicure</div>
+            <div class="d">Crittografate con hash SHA-256</div>
+          </div>
+          <div class="btn-card" style="margin-top:auto;">Inizia gratis &rarr;</div>
         </div>
-        <div class="card"><div class="badge">AZIONE</div><div class="t" style="margin-top:6px;">Genera diffida ISTAT</div><div class="d">Calcolo legittimo: 75% variazione</div></div>
-        <div class="btn">Scarica report</div>
       </div>
     </div>
 
-    <!-- 4. Giusta AI -->
-    <div class="phone">
+    <!-- 2. Upload Contratto -->
+    <div class="device">
       <div class="screen">
-        <span class="label">4 · Chat AI</span>
-        <div class="scr-title">Giusta AI 💬</div>
-        <div class="chat me">Il padrone di casa può tenersi il deposito?</div>
-        <div class="chat ai">No. Il deposito va restituito entro 30 giorni dalla riconsegna (L.431/1998, art.11). Solo danni documentati giustificano trattenute. Posso generare una richiesta di restituzione. 📝</div>
-        <div class="btn">Chiedi altro →</div>
-      </div>
-    </div>
-
-    <!-- 5. Forziere -->
-    <div class="phone">
-      <div class="screen">
-        <span class="label">5 · Vault</span>
-        <div class="scr-title">Forziere Prove 🔐</div>
-        <div class="card"><div class="t">📄 Contratto_2025.pdf</div><div class="d">SHA-256 ✓ 19 lug 2026</div></div>
-        <div class="card"><div class="t">💬 Chat WhatsApp</div><div class="d">Hash verificato ✓</div></div>
-        <div class="card"><div class="t">📷 Foto stato immobile</div><div class="d">Timestamp ✓ 12 giu</div></div>
-        <div class="btn">+ Aggiungi prova</div>
-      </div>
-    </div>
-
-    <!-- 6. Casi -->
-    <div class="phone">
-      <div class="screen">
-        <span class="label">6 · Tracker</span>
-        <div class="scr-title">I tuoi casi 📋</div>
-        <div class="card">
-          <div class="t">Deposito non restituito</div>
-          <div class="d">Stato: <span style="color:#2ee6a6;">In mediazione</span></div>
-          <div class="progress"><div style="width:55%;"></div></div>
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
         </div>
-        <div class="card">
-          <div class="t">Aumento ISTAT illegittimo</div>
-          <div class="d">Stato: <span style="color:#4f8cff;">Istruttoria</span></div>
-          <div class="progress"><div style="width:30%;"></div></div>
+        <div class="screen-content">
+          <div class="label">CARICA</div>
+          <div class="title">Carica il contratto</div>
+          <div class="title-sub">Scatta una foto o carica il PDF</div>
+          <div class="card" style="border:2px dashed #14b8a6;text-align:center;padding:20px;">
+            <div style="font-size:36px;margin-bottom:8px;">&#x1F4E4;</div>
+            <div class="t" style="font-size:13px;">Tocca per caricare</div>
+            <div class="d" style="font-size:10px;">PDF, foto o scansione</div>
+          </div>
+          <div class="card">
+            <div class="t">&#x1F510; Crittografia end-to-end</div>
+            <div class="d">I tuoi dati restano al sicuro su server UE</div>
+          </div>
+          <div class="progress"><div style="width:60%;"></div></div>
+          <div class="btn-card">Analizza ora</div>
         </div>
-        <div class="btn">+ Nuovo caso</div>
       </div>
     </div>
 
-    <!-- 7. Dashboard -->
-    <div class="phone">
+    <!-- 3. Contract Analysis Result -->
+    <div class="device">
       <div class="screen">
-        <span class="label">7 · Home</span>
-        <div class="scr-title">Ciao Marco 👋</div>
-        <div class="card"><div class="t">📊 Il tuo stato</div><div class="d">2 casi attivi · 3 prove salvate</div></div>
-        <div class="card"><div class="t">🤖 Query AI oggi</div><div class="d">3 / 5 usate</div></div>
-        <div class="card"><div class="t">⚡ Piano Casa 2026</div><div class="d">Il tuo contratto ne beneficia?</div></div>
-        <div class="btn">Apri Giusta AI</div>
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
+        </div>
+        <div class="screen-content">
+          <div class="label">RISULTATO</div>
+          <div class="title">Analisi completata</div>
+          <div class="title-sub">&quot;Contratto_Affitto_2025&quot;</div>
+          <div class="card">
+            <div class="t">Clausole rilevate</div>
+            <div class="stat-row"><span class="k">Durata 4+4</span><span class="v">&#x2713; OK</span></div>
+            <div class="stat-row"><span class="k">Deposito 2 mensilit&agrave;</span><span class="v">&#x2713; OK</span></div>
+            <div class="stat-row"><span class="k">Agg. ISTAT 100%</span><span class="v" style="color:#ef4444;">&#x26A0; Abusivo</span></div>
+            <div class="stat-row"><span class="k">Registrazione</span><span class="v" style="color:#ef4444;">&#x2717; Manca</span></div>
+          </div>
+          <div class="card">
+            <div class="badge">AZIONE</div>
+            <div class="t">Genera diffida ISTAT</div>
+            <div class="d">Calcolo legittimo: 75% variazione &middot; L.431/1998</div>
+          </div>
+          <div class="btn-card">Scarica report completo</div>
+        </div>
       </div>
     </div>
 
-    <!-- 8. Abbonamento -->
-    <div class="phone">
+    <!-- 4. Giusta AI Chat -->
+    <div class="device">
       <div class="screen">
-        <span class="label">8 · Pricing</span>
-        <div class="scr-title">Passa a Pro ⭐</div>
-        <div class="price-big">€4,99<small style="font-size:12px;color:#8b97b3;">/mese</small></div>
-        <div class="card"><div class="t">✅ Query IA illimitate</div></div>
-        <div class="card"><div class="t">✅ Analisi illimitate</div></div>
-        <div class="card"><div class="t">✅ 2 GB archivio prove</div></div>
-        <div class="card"><div class="t">✅ Export PDF premium</div></div>
-        <div class="btn">Diventa Pro</div>
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
+        </div>
+        <div class="screen-content">
+          <div class="label">AI GIUSTA</div>
+          <div class="title">Chiedi a Giusta</div>
+          <div class="title-sub">Assistente legale locatizio</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px;justify-content:flex-end;">
+            <div class="chat ai">&#x1F44B; Ciao! Sono Giusta, la tua assistente legale. Come posso aiutarti?</div>
+            <div class="chat me">Il padrone di casa pu&ograve; tenersi il deposito cauzionale?</div>
+            <div class="chat ai">
+              No, il deposito va restituito entro 30 giorni dalla riconsegna (L.431/1998, art.11). Solo danni documentati giustificano trattenute. Posso generare la richiesta di restituzione. &#x1F4DD;
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;padding-top:8px;border-top:1px solid #334155;margin-top:8px;">
+            <div style="flex:1;padding:8px 12px;background:#1e293b;border-radius:8px;color:#64748b;font-size:11px;">
+              Scrivi a Giusta...
+            </div>
+            <div style="width:32px;height:32px;background:#14b8a6;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#0f172a;font-size:14px;">
+              &#x27A4;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Vault / Forziere Prove -->
+    <div class="device">
+      <div class="screen">
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
+        </div>
+        <div class="screen-content">
+          <div class="label">VAULT</div>
+          <div class="title">Forziere Prove</div>
+          <div class="title-sub">Crittografato &middot; Hash SHA-256</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:0;">
+            <div class="vault-item">
+              <div class="vault-icon" style="background:rgba(20,184,166,.15);">&#x1F4C4;</div>
+              <div class="vault-info">
+                <div class="name">Contratto_Affitto_2025.pdf</div>
+                <div class="meta">SHA-256 verificato &middot; 19 lug 2026</div>
+              </div>
+              <div class="vault-badge">&#x2713;</div>
+            </div>
+            <div class="vault-item">
+              <div class="vault-icon" style="background:rgba(59,130,246,.15);">&#x1F4AC;</div>
+              <div class="vault-info">
+                <div class="name">Chat_WhatsApp_Proprietario</div>
+                <div class="meta">Hash verificato &middot; 15 lug 2026</div>
+              </div>
+              <div class="vault-badge">&#x2713;</div>
+            </div>
+            <div class="vault-item">
+              <div class="vault-icon" style="background:rgba(249,115,22,.15);">&#x1F4F7;</div>
+              <div class="vault-info">
+                <div class="name">Foto_danni_bagno.jpeg</div>
+                <div class="meta">Timestamp &middot; 12 giu 2026</div>
+              </div>
+              <div class="vault-badge">&#x2713;</div>
+            </div>
+            <div class="vault-item">
+              <div class="vault-icon" style="background:rgba(168,85,247,.15);">&#x1F4E8;</div>
+              <div class="vault-info">
+                <div class="name">PEC_richiesta_restituzione</div>
+                <div class="meta">Inviata &middot; 10 giu 2026</div>
+              </div>
+              <div class="vault-badge">&#x2713;</div>
+            </div>
+          </div>
+          <div class="btn-card">+ Aggiungi prova</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Case Tracker -->
+    <div class="device">
+      <div class="screen">
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
+        </div>
+        <div class="screen-content">
+          <div class="label">TRACKER</div>
+          <div class="title">I tuoi casi</div>
+          <div class="title-sub">2 attivi &middot; 0 in scadenza</div>
+          <div class="card">
+            <div class="t">Deposito non restituito</div>
+            <div class="d">Stato: <span style="color:#14b8a6;">In mediazione</span></div>
+            <div class="progress"><div style="width:55%;"></div></div>
+            <div class="d" style="display:flex;justify-content:space-between;">
+              <span>Aperto: 21 giu</span>
+              <span style="color:#f59e0b;">Scadenza: 15 ago</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="t">Aumento ISTAT illegittimo</div>
+            <div class="d">Stato: <span style="color:#3b82f6;">Istruttoria</span></div>
+            <div class="progress"><div style="width:30%;background:linear-gradient(90deg,#3b82f6,#60a5fa);"></div></div>
+          </div>
+          <div class="card" style="border:1px dashed #334155;text-align:center;padding:16px;">
+            <div class="d">&#x1F4E8; Diffida inviata via PEC il 10 lug</div>
+          </div>
+          <div class="btn-card">+ Nuovo caso</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Dashboard Home -->
+    <div class="device">
+      <div class="screen">
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
+        </div>
+        <div class="screen-content">
+          <div class="label">HOME</div>
+          <div class="title">Ciao Marco &#x1F44B;</div>
+          <div class="title-sub">Piano Casa 2026: scopri le novit&agrave;</div>
+
+          <div class="card" style="background:linear-gradient(135deg,rgba(20,184,166,.1),rgba(20,184,166,.05));border-color:#14b8a6;">
+            <div class="t" style="color:#14b8a6;">&#x1F3DB;&#xFE0F; Piano Casa 2026</div>
+            <div class="d">La L.116/2026 porta nuove tutele. Il tuo contratto ne beneficia? Verificalo ora.</div>
+          </div>
+
+          <div class="card">
+            <div class="t">&#x1F4CA; La tua attivit&agrave;</div>
+            <div class="stat-row"><span class="k">&#x1F4CB; Casi attivi</span><span class="v">2</span></div>
+            <div class="stat-row"><span class="k">&#x1F510; Prove salvate</span><span class="v">4</span></div>
+            <div class="stat-row"><span class="k">&#x1F916; Query AI oggi</span><span class="v">3 / 5</span></div>
+          </div>
+
+          <div class="card" style="flex:1;">
+            <div class="t" style="color:#f97316;">&#x26A0;&#xFE0F; Promemoria</div>
+            <div class="d">Contratto in scadenza tra 30 giorni. Prepariamo insieme la disdetta?</div>
+          </div>
+
+          <div class="btn-card">Apri Giusta AI</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Abbonamento Pro -->
+    <div class="device">
+      <div class="screen">
+        <div class="screen-header">
+          <span class="time">9:41</span>
+          <span class="icons">&#x1F4F6; &#x1F503;</span>
+        </div>
+        <div class="screen-content" style="align-items:center;text-align:center;">
+          <div class="label">PASSAGGIO</div>
+          <div class="title">Passa a Pro &#x2B50;</div>
+          <div class="price-big">&euro;4,99<small>/mese</small></div>
+          <p style="color:#14b8a6;font-size:11px;font-weight:700;margin-top:-4px;">Risparmia 35% con annuale</p>
+
+          <div style="width:100%;display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+            <div class="card" style="display:flex;align-items:center;gap:8px;padding:8px 12px;">
+              <span style="color:#14b8a6;">&#x2713;</span>
+              <span class="t" style="font-size:11px;">Query AI illimitate</span>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:8px;padding:8px 12px;">
+              <span style="color:#14b8a6;">&#x2713;</span>
+              <span class="t" style="font-size:11px;">Analisi contratti illimitate</span>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:8px;padding:8px 12px;">
+              <span style="color:#14b8a6;">&#x2713;</span>
+              <span class="t" style="font-size:11px;">5 GB archivio prove</span>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:8px;padding:8px 12px;">
+              <span style="color:#14b8a6;">&#x2713;</span>
+              <span class="t" style="font-size:11px;">Diffide illimitate con PEC</span>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:8px;padding:8px 12px;">
+              <span style="color:#14b8a6;">&#x2713;</span>
+              <span class="t" style="font-size:11px;">Emergency Mode</span>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:8px;padding:8px 12px;">
+              <span style="color:#14b8a6;">&#x2713;</span>
+              <span class="t" style="font-size:11px;">Supporto prioritario</span>
+            </div>
+          </div>
+
+          <div style="margin-top:auto;width:100%;">
+            <div class="btn-card">Prova gratis 7 giorni</div>
+            <p style="color:#64748b;font-size:9px;margin-top:6px;">Disdici quando vuoi &middot; Nessun vincolo</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="legend">
-    <b>Note per produzione:</b> Questi mockup sono rappresentazioni HTML delle 8 schermate reali in <code>apps/mobile/app</code>. Per screenshot nativi, eseguire build Expo + emulator (vedi STORE_LISTING_2026.md). Risorse consigliate: 1080×2340 (Android), 1290×2796 (iOS 6,7").
+    <b>Specifiche tecniche per export:</b><br />
+    <b>iOS:</b> 6,5" (1242&times;2688) + 5,5" (1242&times;2208) + 6,7" (1290&times;2796) — PNG, no trasparenza<br />
+    <b>Android:</b> 1080&times;1920 (9:16) o 1080&times;2340 — PNG, no bordi neri<br />
+    <b>Caption overlay:</b> max 30% dell'area<br /><br />
+
+    <b>Caption per ogni screenshot (da aggiungere in App Store Connect / Google Play Console):</b><br />
+    1. "Scopri i tuoi diritti in 3 tap" &middot;
+    2. "Carica il contratto" &middot;
+    3. "Analisi immediata delle clausole" &middot;
+    4. "Chiedi a Giusta, risposta istantanea" &middot;
+    5. "Le tue prove, crittografate" &middot;
+    6. "Traccia il tuo caso" &middot;
+    7. "Tutto in un posto" &middot;
+    8. "Pro da &euro;4,99/mese"<br /><br />
+
+    <b>Generazione:</b> Apri questo file in browser + screenshot nativo oppure usa Puppeteer/Playwright per automazione.
+    Mockup visivi basati sul codice reale in <code>apps/mobile/app</code> e <code>05_DESIGN_SYSTEM.md</code>.
   </div>
 </body>
 </html>

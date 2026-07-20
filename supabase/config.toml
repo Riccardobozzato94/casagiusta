@@ -66,5 +66,11 @@ verify_jwt = true
 [EDGE_FUNCTIONS.SEARCH_LAWYERS]
 verify_jwt = false  # Public search
 
+[EDGE_FUNCTIONS.PEC_SEND]
+verify_jwt = true   # Requires auth to send PEC
+
+[EDGE_FUNCTIONS.PUSH_SEND]
+verify_jwt = true   # Requires auth to send push
+
 [REALTIME]
 enabled = true

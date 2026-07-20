@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from './ThemeProvider';
+import { NotificationProvider } from './NotificationProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient({
@@ -17,8 +18,10 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <StatusBar style="dark" />
-        {children}
+        <NotificationProvider>
+          <StatusBar style="dark" />
+          {children}
+        </NotificationProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
