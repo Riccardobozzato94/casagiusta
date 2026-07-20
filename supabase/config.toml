@@ -72,5 +72,8 @@ verify_jwt = true   # Requires auth to send PEC
 [EDGE_FUNCTIONS.PUSH_SEND]
 verify_jwt = true   # Requires auth to send push
 
+[EDGE_FUNCTIONS.WAITLIST_JOIN]
+verify_jwt = false  # Public waitlist signup (no auth required)
+
 [REALTIME]
 enabled = true

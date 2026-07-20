@@ -45,11 +45,17 @@ export default function VaultPage() {
       ]);
       setEvidence(evidenceData);
       setCases(casesData);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Failed to load vault data:", err);
-      setError(
-        "Impossibile caricare i dati del Vault. Verifica la connessione e riprova."
-      );
+      if (err instanceof Error && err.message === "CONFIG_ERROR") {
+        setError(
+          "Configura il progetto Supabase in apps/web/.env.local per abilitare il Vault."
+        );
+      } else {
+        setError(
+          "Impossibile caricare i dati del Vault. Verifica la connessione e riprova."
+        );
+      }
     } finally {
       setLoading(false);
     }

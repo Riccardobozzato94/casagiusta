@@ -3,7 +3,22 @@ import { createBrowserClient } from "@supabase/ssr";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
+function getSupabaseClient() {
+  if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes("your-project")) {
+    throw new Error(
+      "Configura Supabase: imposta NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY"
+    );
+  }
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
+}
+
+function createApiClient() {
+  try {
+    return getSupabaseClient();
+  } catch {
+    return null;
+  }
+}
 
 // ── Evidence (Vault) types ──
 export interface EvidenceItem {
@@ -33,7 +48,9 @@ export interface VaultCase {
 
 // ── Evidence API functions ──
 export async function fetchEvidenceList(): Promise<EvidenceItem[]> {
-  const { data, error } = await supabase
+  const client = createApiClient();
+  if (!client) throw new Error("CONFIG_ERROR");
+  const { data, error } = await client
     .from("evidence")
     .select("*")
     .eq("is_deleted", false)
@@ -45,7 +62,9 @@ export async function fetchEvidenceList(): Promise<EvidenceItem[]> {
 }
 
 export async function fetchEvidenceByCase(caseId: string): Promise<EvidenceItem[]> {
-  const { data, error } = await supabase
+  const client = createApiClient();
+  if (!client) throw new Error("CONFIG_ERROR");
+  const { data, error } = await client
     .from("evidence")
     .select("*")
     .eq("case_id", caseId)
@@ -60,7 +79,9 @@ export async function verifyEvidenceIntegrity(
   evidenceId: string,
   fileBase64: string
 ): Promise<{ integrity_verified: boolean; hash_sha256_stored: string }> {
-  const { data, error } = await supabase.functions.invoke("evidence-hash", {
+  const client = createApiClient();
+  if (!client) throw new Error("CONFIG_ERROR");
+  const { data, error } = await client.functions.invoke("evidence-hash", {
     method: "GET",
     body: { id: evidenceId, fileBase64 },
   });
@@ -70,13 +91,17 @@ export async function verifyEvidenceIntegrity(
 }
 
 export async function getEvidenceDownloadUrl(filePath: string): Promise<string> {
-  const { data } = supabase.storage.from("evidence").getPublicUrl(filePath);
+  const client = createApiClient();
+  if (!client) throw new Error("CONFIG_ERROR");
+  const { data } = client.storage.from("evidence").getPublicUrl(filePath);
   return data.publicUrl;
 }
 
 // ── Cases API functions ──
 export async function fetchUserCases(): Promise<VaultCase[]> {
-  const { data: cases, error } = await supabase
+  const client = createApiClient();
+  if (!client) throw new Error("CONFIG_ERROR");
+  const { data: cases, error } = await client
     .from("cases")
     .select("*")
     .eq("is_archived", false)
@@ -88,7 +113,7 @@ export async function fetchUserCases(): Promise<VaultCase[]> {
   // Enrich with evidence count
   const casesWithCount = await Promise.all(
     (cases ?? []).map(async (c) => {
-      const { count } = await supabase
+      const { count } = await client
         .from("evidence")
         .select("*", { count: "exact", head: true })
         .eq("case_id", c.id)
