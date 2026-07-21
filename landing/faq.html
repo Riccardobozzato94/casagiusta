@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — CasaGiusta</title>
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://casagiusta.it/faq.html" />
+  <style>
+    :root {
+      --primary-50:  #f0fdfa; --primary-100: #ccfbf1; --primary-200: #99f6e4;
+      --primary-300: #5eead4; --primary-400: #2dd4bf; --primary-500: #14b8a6;
+      --primary-600: #0d9488; --primary-700: #0f766e; --primary-800: #115e59; --primary-900: #134e4a;
+      --bg-primary: #0f172a; --bg-secondary: #1e293b; --bg-tertiary: #334155;
+      --text-primary: #f8fafc; --text-secondary: #cbd5e1; --text-tertiary: #64748b;
+      --border: #334155; --radius: 16px; --radius-sm: 10px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-primary); color: var(--text-primary); line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    header {
+      display: flex; align-items: center; padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-primary); }
+    .logo-icon {
+      width: 28px; height: 28px; background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
+      border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #fff;
+    }
+    .logo span { color: var(--primary-400); }
+    .page { padding: 60px 0 80px; }
+    .page h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; letter-spacing: -1px; }
+    .page .subtitle { color: var(--text-secondary); font-size: 15px; margin-bottom: 40px; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px; color: var(--primary-400);
+      text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .faq-item {
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px 24px; margin-bottom: 12px;
+    }
+    .faq-item h3 {
+      font-size: 16px; font-weight: 600; color: var(--text-primary);
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-item h3::after {
+      content: '+'; font-size: 20px; color: var(--primary-400); font-weight: 700;
+      transition: transform .2s;
+    }
+    .faq-item.open h3::after { content: '−'; }
+    .faq-item p {
+      color: var(--text-secondary); font-size: 14px; margin-top: 12px;
+      display: none; line-height: 1.7;
+    }
+    .faq-item.open p { display: block; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 24px 0; text-align: center;
+      color: var(--text-tertiary); font-size: 13px;
+    }
+    footer a { color: var(--primary-400); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .page h1 { font-size: 28px; }
+      .page { padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#x1F6E1;</span>
+        Casa<span>Giusta</span>
+      </a>
+    </header>
+  </div>
+
+  <div class="page">
+    <div class="container">
+      <a href="index.html" class="back-link">&larr; Torna alla home</a>
+      <h1>Domande frequenti</h1>
+      <p class="subtitle">Tutto ciò che vuoi sapere su CasaGiusta</p>
+
+      <div class="faq-item">
+        <h3>Cos'è CasaGiusta?</h3>
+        <p>CasaGiusta è la prima piattaforma italiana di tutela attiva per inquilini. Un'app che ti aiuta ad analizzare contratti d'affitto, conservare prove crittografate e agire legalmente contro violazioni locatizie, il tutto dal tuo smartphone.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Costa qualcosa?</h3>
+        <p>No, CasaGiusta ha un piano gratuito (Free) che include 5 query AI al giorno, 1 analisi contratto al mese e 50 MB di archivio prove. Il piano Pro costa €4,99/mese e sblocca tutto. C'è anche un piano Annuale a €39/anno (risparmi il 35%).</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Cosa fa Giusta AI?</h3>
+        <p>Giusta AI è il nostro assistente legale specializzato in diritto locatizio. Analizza le clausole dei tuoi contratti, confronta i canoni con i valori di mercato, identifica clausole vessatorie e ti spiega i tuoi diritti con riferimenti normativi precisi (L.431/1998, Codice Civile).</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>I miei documenti sono al sicuro?</h3>
+        <p>Assolutamente sì. Ogni file che carichi nel Vault Prove viene crittografato end-to-end con AES-256, hashizzato con SHA-256 e timbrato temporalmente. I server sono in UE (Francoforte). Non condividiamo i tuoi documenti con nessuno senza il tuo esplicito consenso.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Cosa succede se attivo la Modalità Emergenza?</h3>
+        <p>La Modalità Emergenza attiva istantaneamente la registrazione audio/video, geolocalizza la tua posizione e invia tutto a contatti fidati e a un legale convenzionato. I dati vengono crittografati prima dell'invio. È pensata per situazioni di pericolo imminente.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Posso usare CasaGiusta senza competenze legali?</h3>
+        <p>Sì, CasaGiusta è progettata per chiunque. L'interfaccia è semplice e Giusta AI ti guida passo dopo passo. Ogni azione è spiegata in linguaggio chiaro, senza gergo legale.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>CasaGiusta sostituisce un avvocato?</h3>
+        <p>No. CasaGiusta fornisce strumenti di analisi e supporto, ma non sostituisce la consulenza di un avvocato abilitato. Per questioni complesse o cause legali, ti mettiamo in contatto con studi legali convenzionati.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Quali documenti posso caricare?</h3>
+        <p>Puoi caricare contratti d'affitto (PDF, foto), ricevute di pagamento, comunicazioni col proprietario (chat, email, lettere), foto dello stato dell'immobile e qualsiasi altro documento utile alla tua tutela.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Come funziona la Community?</h3>
+        <p>La Community Anonima ti permette di condividere esperienze con altri inquilini in modo sicuro. Il tuo profilo è anonimo automaticamente. I contenuti sono moderati da legali per garantire informazioni corrette.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Quando sarà disponibile l'app?</h3>
+        <p>CasaGiusta arriverà su iOS e Android nelle prossime settimane. Iscriviti alla waitlist per essere tra i primi a provarla e ricevere uno sconto esclusivo al lancio.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Come posso cancellare il mio account?</h3>
+        <p>Puoi cancellare il tuo account in qualsiasi momento dalle impostazioni dell'app. Tutti i tuoi dati, inclusi i documenti nel Vault, verranno eliminati entro 30 giorni.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 CasaGiusta — <a href="index.html">Home</a> — <a href="privacy.html">Privacy Policy</a> — <a href="termini.html">Termini di Servizio</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-item h3').forEach(function(header) {
+      header.addEventListener('click', function() {
+        this.parentElement.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
